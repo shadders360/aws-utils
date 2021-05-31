@@ -10,7 +10,15 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['Click>=7.0', ]
+requirements = [
+    'boto3>=1.17.84',
+    'botocore>=1.20.84',
+    'click>=8.0.1',
+    'configparser>=5.0.2',
+    'python-dateutil>=2.8.1',
+    'questionary>=1.9.0',
+    'rich>=10.2.2'
+]
 
 test_requirements = ['pytest>=3', ]
 
