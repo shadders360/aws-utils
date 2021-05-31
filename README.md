@@ -1,7 +1,11 @@
-# hello-world
+# aws utils
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ultricies scelerisque neque vitae
- gravida. Nulla mattis efficitur porta. Suspendisse in magna est. Ut suscipit, orci a
-  malesuada porta, augue risus maximus est, eu semper ligula erat laoreet nibh. Pellentesque
-   bibendum quis eros aliquam ornare. Suspendisse eleifend est magna, vel consectetur nisi gravida ac. Quisque sodales lorem non mi faucibus, vitae facilisis lacus ullamcorper. In ac tellus sit amet mauris faucibus pellentesque. Integer vitae sapien ornare, maximus felis ut, tristique lorem. Aenean lacus libero, tincidunt ut eleifend sit amet, egestas vitae leo. Aliquam sit amet neque facilisis, volutpat dolor vitae, suscipit risus. Vivamus 
-nec mollis quam, at feugiat eros. 
+Current my place of work makes use Active directory for SSO into AWS. Working and switching accounts becomnes
+a memory mind field. Sometimes the aws access keys are needed to be exported for example with serverless framework.
+
+* AWS credentials export script
+* AWS show profiles
+
+I also need to deploy this as a python pip install, so I can added it to my dev container setup
+
+
