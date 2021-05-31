@@ -1,7 +1,6 @@
-"""Main module."""
-"""Assume a role and export AWS credentials."""
-from time import gmtime, strftime
-
+"""Main module.
+Assume a role and export AWS credentials.
+"""
 import boto3
 import click
 import configparser
@@ -10,7 +9,9 @@ import questionary
 import sys
 
 from rich.console import Console
-from rich.table import Column, Table
+from rich.table import Table
+from time import gmtime, strftime
+
 
 class QuestionaryOption(click.Option):
 
@@ -39,8 +40,8 @@ class AwsConfig():
         self.config.read(path)
 
     def get_profile_names(self):
-        return [section.replace('profile ','') for section in sorted(self.config.sections())
-                    if 'role_arn' in self.config[section]]
+        return [section.replace('profile ', '') for section in sorted(self.config.sections())
+                if 'role_arn' in self.config[section]]
 
     def to_console(self):
         console = Console()
@@ -51,10 +52,11 @@ class AwsConfig():
 
         for section in sorted(self.config.sections()):
             if 'role_arn' in self.config[section]:
-                table.add_row(section.replace('profile ',''), self.config[section]["role_arn"])
+                table.add_row(section.replace('profile ', ''), self.config[section]["role_arn"])
 
         # show results
         console.print(table)
+
 
 class AwsCredntials():
 
@@ -64,8 +66,6 @@ class AwsCredntials():
         self.boto3_session = boto3.session.Session(profile_name=sso_profile)
         self.profile = profile
         self.assume_role(assume_role_arn)
-
-
 
     def assume_role(self, role_arn):
         sts_client = self.boto3_session.client('sts')
@@ -85,7 +85,6 @@ class AwsCredntials():
             "aws_profile": self.profile
         }
 
-
     def create_export_command(self):
 
         time_stamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
@@ -100,12 +99,11 @@ class AwsCredntials():
             outfile.write('\n')
 
 
-
 @click.command()
 @click.option('--profile', '-p', help='Assume the role for this Profile and Export the AWS credentials',
-                prompt='Export AWS access keys',
-                type=click.Choice(AwsConfig().get_profile_names(), case_sensitive=False),
-                cls=QuestionaryOption)
+              prompt='Export AWS access keys',
+              type=click.Choice(AwsConfig().get_profile_names(), case_sensitive=False),
+              cls=QuestionaryOption)
 @click.option('--sso-profile', '-s', default='azure', help='The SSO profile used to sign into AWS')
 def cli(profile, sso_profile):
     """Call the aws sts service to assume the role defined in the profile
@@ -131,7 +129,7 @@ def cli(profile, sso_profile):
     click.echo(f'Exporting credentials using sso profile {sso_profile} assume role defined by profile {profile}')
     aws_profile_key = f'profile {profile}'
     assumed_role_profile = AwsConfig().config[aws_profile_key]
-    aws_creds = AwsCredntials(profile, assumed_role_profile['role_arn'],sso_profile)
+    aws_creds = AwsCredntials(profile, assumed_role_profile['role_arn'], sso_profile)
     aws_creds.create_export_command()
 
 
