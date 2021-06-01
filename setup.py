@@ -39,7 +39,7 @@ setup(
     description="A few python scripts to navigate around AWS",
     entry_points={
         'console_scripts': [
-            'aws_utils=aws_utils.cli:main',
+            'aws-export-sso=aws_utils.aws_export:cli',
         ],
     },
     install_requires=requirements,
